@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apolo Pro — Verified Performance</title>
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Chart.js para los gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<style>
+:root {
+  --bg:           #0a0a0d;
+  --bg-elev:      #111114;
+  --bg-card:      #16161a;
+  --line:         #25252c;
+  --text:         #ffffff;
+  --text-dim:     #8a8a96;
+  --text-muted:   #5a5a64;
+  --cyan:         #06b6d4;
+  --cyan-glow:    #22d3ee;
+  --gold:         #f59e0b;
+  --gold-glow:    #fbbf24;
+  --green:        #10d98a;
+  --red:          #ef4444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Textura ambiental sutil */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(6,182,212,0.06), transparent 40%),
+    radial-gradient(circle at 85% 70%, rgba(245,158,11,0.04), transparent 35%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+main { position: relative; z-index: 1; }
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════
+   NAV
+   ═════════════════════════════════════════════════════════════════════════ */
+nav {
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+  backdrop-filter: blur(12px);
+  background: rgba(10,10,13,0.7);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--cyan);
+  font-weight: 700;
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  box-shadow: 0 0 24px rgba(6,182,212,0.25);
+}
+
+.brand-text {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: 0.02em;
+}
+
+.brand-text span {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-cta {
+  padding: 9px 22px;
+  background: var(--cyan);
+  color: #001520;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-cta:hover {
+  background: var(--cyan-glow);
+  box-shadow: 0 8px 24px rgba(6,182,212,0.35);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════
+   HERO
+   ═════════════════════════════════════════════════════════════════════════ */
+.hero {
+  padding: 100px 0 72px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 28px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--cyan);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(48px, 7vw, 92px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+
+h1 .gold {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero-tagline {
+  font-size: 17px;
+  color: var(--text-dim);
+  max-width: 580px;
+  line-height: 1.65;
+  margin-bottom: 56px;
+}
+
+/* Las 3 métricas grandes del hero */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-stat {
+  padding: 36px 0;
+  position: relative;
+}
+
+.hero-stat:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 30%;
+  height: 40%;
+  width: 1px;
+  background: var(--line);
+}
+
+.hero-stat:not(:first-child) { padding-left: 36px; }
+
+.hero-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.hero-stat-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.hero-stat-value.positive { color: var(--green); }
+.hero-stat-value.negative { color: var(--red); }
+.hero-stat-value.cyan { color: var(--cyan); }
+.hero-stat-value.gold { color: var(--gold); }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   SECTION
+   ═════════════════════════════════════════════════════════════════════════ */
+.section {
+  padding: 96px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 36px;
+  letter-spacing: -0.015em;
+}
+
+.section-title em {
+  color: var(--cyan);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.section-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════
+   STATS GRID
+   ═════════════════════════════════════════════════════════════════════════ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.stat-card {
+  background: var(--bg);
+  padding: 28px;
+  transition: background 0.2s;
+}
+
+.stat-card:hover { background: var(--bg-elev); }
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.stat-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.015em;
+}
+
+.stat-value.cyan { color: var(--cyan); }
+.stat-value.gold { color: var(--gold); }
+.stat-value.green { color: var(--green); }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   CHART
+   ═════════════════════════════════════════════════════════════════════════ */
+.chart-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 36px;
+  position: relative;
+}
+
+.chart-wrap canvas {
+  max-height: 420px;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.chart-btn {
+  font-family: 'JetBrains Mono', monospace;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chart-btn:hover {
+  color: var(--text);
+  border-color: var(--text-dim);
+}
+
+.chart-btn.active {
+  background: var(--cyan);
+  color: #001520;
+  border-color: var(--cyan);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════
+   ASSETS TABLE
+   ═════════════════════════════════════════════════════════════════════════ */
+.assets-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.asset-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 32px;
+  transition: all 0.2s;
+}
+
+.asset-card:hover {
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+}
+
+.asset-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.asset-symbol {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.asset-name {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+}
+
+.asset-tf {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(6,182,212,0.1);
+  color: var(--cyan);
+  border: 1px solid rgba(6,182,212,0.3);
+  letter-spacing: 0.06em;
+}
+
+.asset-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.asset-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.asset-row-label {
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.asset-row-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.asset-row-value.green { color: var(--green); }
+.asset-row-value.cyan { color: var(--cyan); }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   TRADES TABLE
+   ═════════════════════════════════════════════════════════════════════════ */
+.trades-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  overflow: auto;
+  max-height: 720px;
+}
+
+.trades-wrap thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead {
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 16px 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th.right { text-align: right; }
+
+tbody tr {
+  border-bottom: 1px solid var(--line);
+  transition: background 0.15s;
+}
+
+tbody tr:hover { background: var(--bg-elev); }
+
+td {
+  padding: 16px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+td.right { text-align: right; }
+
+td.bold {
+  color: var(--text);
+  font-weight: 500;
+}
+
+td .pill {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+
+.pill.buy {
+  background: rgba(16,217,138,0.12);
+  color: var(--green);
+}
+
+.pill.sell {
+  background: rgba(239,68,68,0.12);
+  color: var(--red);
+}
+
+.pill.tp1, .pill.tp2 {
+  background: rgba(16,217,138,0.12);
+  color: var(--green);
+}
+
+.pill.tp1\+sl {
+  background: rgba(245,158,11,0.12);
+  color: var(--gold);
+}
+
+.pill.tp3 {
+  background: rgba(245,158,11,0.15);
+  color: var(--gold);
+}
+
+.pill.sl {
+  background: rgba(239,68,68,0.12);
+  color: var(--red);
+}
+
+.pill.smart {
+  background: rgba(6,182,212,0.12);
+  color: var(--cyan);
+}
+
+.stars {
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+td.profit-pos { color: var(--green); font-weight: 500; }
+td.profit-neg { color: var(--red); font-weight: 500; }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   DISCLAIMER
+   ═════════════════════════════════════════════════════════════════════════ */
+.disclaimer {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  padding: 28px 32px;
+  margin-top: 48px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.disclaimer strong { color: var(--gold); }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ═════════════════════════════════════════════════════════════════════════ */
+footer {
+  padding: 64px 0 40px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.footer-grid a {
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-left: 24px;
+  transition: color 0.2s;
+}
+
+.footer-grid a:hover { color: var(--cyan); }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .container { padding: 0 20px; }
+  .hero { padding: 64px 0 48px; }
+  .hero-stats { grid-template-columns: 1fr; }
+  .hero-stat:not(:last-child)::after { display: none; }
+  .hero-stat { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .hero-stat:not(:first-child) { padding-left: 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .assets-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .section { padding: 64px 0; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="brand">
+      <div class="brand-icon">A</div>
+      <div class="brand-text">Apolo<span>·Pro</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#stats">Performance</a>
+      <a href="#equity">Equity</a>
+      <a href="#trades">Trades</a>
+    </div>
+    <a href="#" class="nav-cta">Solicitar acceso</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Verified Performance · TradingView Backtest</div>
+      <h1>
+        Apolo <span class="gold">Pro</span><br>
+        Track Record
+      </h1>
+      <p class="hero-tagline">
+        Estrategia profesional invite-only de detección de tendencias para TradingView.
+        Solo señales de máxima convicción: mínimo 4 estrellas y tendencia mayor confirmada.
+        <strong style="color: #fff;">Datos 100% verificables</strong> — backtest auditado por el Strategy Tester
+        nativo de TradingView, exportable a CSV para inspección completa.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-label">Net Profit</div>
+          <div class="hero-stat-value positive" id="hero-pct">—</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">Max Drawdown</div>
+          <div class="hero-stat-value negative" id="hero-dd">—</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">Net Pips</div>
+          <div class="hero-stat-value gold" id="hero-pips">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ADVANCED STATS
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="stats">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Advanced <em>Statistics</em></h2>
+        <div class="section-meta" id="stats-period">—</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Inicio Periodo</div>
+          <div class="stat-value" id="s-initial">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cierre Periodo</div>
+          <div class="stat-value green" id="s-current">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Trades</div>
+          <div class="stat-value" id="s-trades">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Win Rate</div>
+          <div class="stat-value cyan" id="s-wr">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Profit Factor</div>
+          <div class="stat-value gold" id="s-pf">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Trade Time</div>
+          <div class="stat-value" id="s-time">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Daily Avg</div>
+          <div class="stat-value green" id="s-daily">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Monthly Avg</div>
+          <div class="stat-value green" id="s-monthly">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       EQUITY CURVE
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="equity">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Equity <em>Curve</em></h2>
+        <div class="section-meta">Capital $1,000 · Lotaje 0.01 · Strategy Tester TradingView</div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="equityChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ASSETS
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Activo <em>Operado</em></h2>
+        <div class="section-meta">Datos del Strategy Tester de TradingView</div>
+      </div>
+
+      <div class="assets-grid" id="assets-grid"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       TRADES TABLE
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="trades">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Últimas <em>Operaciones</em></h2>
+        <div class="section-meta" id="trades-count">—</div>
+      </div>
+
+      <div class="trades-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Apertura</th>
+              <th>Cierre</th>
+              <th>Activo</th>
+              <th>TF</th>
+              <th>Tipo</th>
+              <th>★</th>
+              <th class="right">SL</th>
+              <th class="right">TP</th>
+              <th class="right">Entry</th>
+              <th class="right">Close</th>
+              <th class="right">Result</th>
+              <th class="right">Pips</th>
+              <th class="right">Gain</th>
+            </tr>
+          </thead>
+          <tbody id="trades-body"></tbody>
+        </table>
+      </div>
+
+      <div class="disclaimer">
+        <strong>📊 Verificable:</strong>
+        Los resultados aquí presentados son <strong>extraídos directamente del Strategy Tester
+        de TradingView</strong> usando la estrategia oficial Apolo Pro en XAGUSD M5 (Vantage).
+        Cualquier usuario con acceso a TradingView puede reproducir estos mismos datos cargando
+        el código y verificar las 210 operaciones una por una.
+        <br><br>
+        <strong>⚠ Disclaimer:</strong> El rendimiento pasado <strong>NO garantiza resultados futuros</strong>.
+        Los datos provienen de backtest con datos históricos de Vantage; las operaciones reales
+        en bróker pueden variar por spread, slippage, comisiones y condiciones de ejecución.
+        Esta página no constituye asesoría financiera. Trading conlleva riesgo de pérdida.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>© 2026 Apolo Trading System · Backtest auditado en TradingView</div>
+    <div>
+      <a href="#">Términos</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Contacto</a>
+    </div>
+  </div>
+</footer>
+
+<script src="apolo-data.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// RELLENAR DATOS
+// ═══════════════════════════════════════════════════════════════════════
+
+// Hero
+document.getElementById('hero-pct').textContent  = APOLO_DATA.hero.netProfitPct;
+document.getElementById('hero-dd').textContent   = APOLO_DATA.hero.maxDrawdown;
+document.getElementById('hero-pips').textContent = APOLO_DATA.hero.netProfitPips;
+
+// Stats avanzadas
+const s = APOLO_DATA.stats;
+document.getElementById('s-initial').textContent  = s.initialBalance;
+document.getElementById('s-current').textContent  = s.currentBalance;
+document.getElementById('s-trades').textContent   = s.totalTrades;
+document.getElementById('s-wr').textContent       = s.winRate;
+document.getElementById('s-pf').textContent       = s.profitFactor;
+document.getElementById('s-time').textContent     = s.avgTradeTime;
+document.getElementById('s-daily').textContent    = s.dailyAvg;
+document.getElementById('s-monthly').textContent  = s.monthlyAvg;
+document.getElementById('stats-period').textContent = `${s.startDate} · ${s.period}`;
+document.getElementById('trades-count').textContent = `Historial completo · ${APOLO_DATA.trades.length} operaciones`;
+
+// Assets
+const assetsGrid = document.getElementById('assets-grid');
+APOLO_DATA.assets.forEach(a => {
+  assetsGrid.insertAdjacentHTML('beforeend', `
+    <div class="asset-card">
+      <div class="asset-head">
+        <div>
+          <div class="asset-symbol">${a.symbol}</div>
+          <div class="asset-name">${a.name}</div>
+        </div>
+        <div class="asset-tf">${a.timeframe}</div>
+      </div>
+      <div class="asset-rows">
+        <div class="asset-row">
+          <span class="asset-row-label">Trades</span>
+          <span class="asset-row-value">${a.trades}</span>
+        </div>
+        <div class="asset-row">
+          <span class="asset-row-label">Win Rate</span>
+          <span class="asset-row-value cyan">${a.winRate}</span>
+        </div>
+        <div class="asset-row">
+          <span class="asset-row-label">Profit Factor</span>
+          <span class="asset-row-value green">${a.profitFactor}</span>
+        </div>
+        <div class="asset-row">
+          <span class="asset-row-label">Net Pips</span>
+          <span class="asset-row-value green">${a.netPips}</span>
+        </div>
+      </div>
+    </div>
+  `);
+});
+
+// Tabla de trades
+const tbody = document.getElementById('trades-body');
+APOLO_DATA.trades.forEach(t => {
+  const stars = '★'.repeat(t.stars) + '☆'.repeat(5 - t.stars);
+  const profitClass = t.pips >= 0 ? 'profit-pos' : 'profit-neg';
+  const sign = t.gainPct >= 0 ? '+' : '';
+  const pipsSign = t.pips >= 0 ? '+' : '';
+  const actionClass = t.action.toLowerCase();
+  // Mapear resultado a clase CSS válida
+  const resultClass = t.result.toLowerCase().replace('+', '\\+');
+
+  tbody.insertAdjacentHTML('beforeend', `
+    <tr>
+      <td>${t.openDate}</td>
+      <td>${t.closeDate}</td>
+      <td class="bold">${t.symbol}</td>
+      <td>${t.timeframe}</td>
+      <td><span class="pill ${actionClass}">${t.action}</span></td>
+      <td><span class="stars">${stars}</span></td>
+      <td class="right">${t.sl !== null ? t.sl : '—'}</td>
+      <td class="right">${t.tp !== null ? t.tp : '—'}</td>
+      <td class="right bold">${t.priceOpen}</td>
+      <td class="right">${t.priceClose}</td>
+      <td class="right"><span class="pill ${resultClass}">${t.result}</span></td>
+      <td class="right ${profitClass}">${pipsSign}${t.pips}</td>
+      <td class="right ${profitClass}">${sign}${t.gainPct}%</td>
+    </tr>
+  `);
+});
+
+// ═══════════════════════════════════════════════════════════════════════
+// EQUITY CHART
+// ═══════════════════════════════════════════════════════════════════════
+const ctx = document.getElementById('equityChart').getContext('2d');
+const labels = APOLO_DATA.equityCurve.map(p => p.date);
+const data = APOLO_DATA.equityCurve.map(p => p.balance);
+
+const gradient = ctx.createLinearGradient(0, 0, 0, 420);
+gradient.addColorStop(0, 'rgba(6,182,212,0.35)');
+gradient.addColorStop(0.5, 'rgba(6,182,212,0.10)');
+gradient.addColorStop(1, 'rgba(6,182,212,0.00)');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'Balance',
+      data: data,
+      borderColor: '#22d3ee',
+      backgroundColor: gradient,
+      borderWidth: 2,
+      pointRadius: 0,
+      pointHoverRadius: 6,
+      pointHoverBackgroundColor: '#22d3ee',
+      pointHoverBorderColor: '#0a0a0d',
+      pointHoverBorderWidth: 2,
+      fill: true,
+      tension: 0.35
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { intersect: false, mode: 'index' },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#16161a',
+        borderColor: '#25252c',
+        borderWidth: 1,
+        titleColor: '#8a8a96',
+        titleFont: { family: 'JetBrains Mono', size: 11, weight: '500' },
+        bodyColor: '#22d3ee',
+        bodyFont: { family: 'Fraunces', size: 18, weight: '500' },
+        padding: 14,
+        cornerRadius: 0,
+        displayColors: false,
+        callbacks: {
+          label: c => `$${c.parsed.y.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.03)', drawTicks: false },
+        ticks: {
+          color: '#5a5a64',
+          font: { family: 'JetBrains Mono', size: 10 },
+          maxTicksLimit: 8,
+          padding: 12
+        },
+        border: { display: false }
+      },
+      y: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: {
+          color: '#5a5a64',
+          font: { family: 'JetBrains Mono', size: 10 },
+          padding: 12,
+          callback: v => '$' + v.toLocaleString('en-US')
+        },
+        border: { display: false }
+      }
+    }
+  }
+});
+
+// Animaciones suaves al cargar
+document.querySelectorAll('.stat-card, .asset-card').forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(12px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  setTimeout(() => {
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  }, 100 + i * 40);
+});
+</script>
+
+</body>
+</html>
