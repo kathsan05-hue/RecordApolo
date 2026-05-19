@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apolo Pro — Verified Performance</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<style>
+:root {
+  --bg:           #0a0a0d;
+  --bg-elev:      #111114;
+  --bg-card:      #16161a;
+  --line:         #25252c;
+  --text:         #ffffff;
+  --text-dim:     #8a8a96;
+  --text-muted:   #5a5a64;
+  --cyan:         #06b6d4;
+  --cyan-glow:    #22d3ee;
+  --gold:         #f59e0b;
+  --gold-glow:    #fbbf24;
+  --green:        #10d98a;
+  --red:          #ef4444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(6,182,212,0.06), transparent 40%),
+    radial-gradient(circle at 85% 70%, rgba(245,158,11,0.04), transparent 35%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+main { position: relative; z-index: 1; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+nav {
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+  backdrop-filter: blur(12px);
+  background: rgba(10,10,13,0.7);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-icon {
+  width: 38px; height: 38px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--cyan);
+  font-weight: 700;
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  box-shadow: 0 0 24px rgba(6,182,212,0.25);
+}
+.brand-text {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: 0.02em;
+}
+.brand-text span { color: var(--gold); font-weight: 700; }
+
+.nav-links {
+  display: flex; gap: 32px;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.nav-links a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+.live-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
+  background: rgba(16,217,138,0.08);
+  border: 1px solid rgba(16,217,138,0.3);
+  color: var(--green);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.live-badge::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--green); border-radius: 50%;
+  box-shadow: 0 0 12px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.hero { padding: 100px 0 72px; border-bottom: 1px solid var(--line); }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 28px;
+}
+.eyebrow::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--cyan); border-radius: 50%;
+  box-shadow: 0 0 12px var(--cyan);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(48px, 7vw, 92px);
+  line-height: 0.98; letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+h1 .gold { color: var(--gold); font-style: italic; font-weight: 400; }
+
+.hero-tagline {
+  font-size: 17px; color: var(--text-dim);
+  max-width: 620px; line-height: 1.65;
+  margin-bottom: 56px;
+}
+.hero-tagline strong { color: #fff; font-weight: 500; }
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.hero-stat { padding: 36px 0; position: relative; }
+.hero-stat:not(:last-child)::after {
+  content: ''; position: absolute; right: 0; top: 30%;
+  height: 40%; width: 1px; background: var(--line);
+}
+.hero-stat:not(:first-child) { padding-left: 36px; }
+
+.hero-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.hero-stat-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1; letter-spacing: -0.02em;
+}
+.hero-stat-value.positive { color: var(--green); }
+.hero-stat-value.negative { color: var(--red); }
+.hero-stat-value.cyan { color: var(--cyan); }
+.hero-stat-value.gold { color: var(--gold); }
+
+.section { padding: 96px 0; border-bottom: 1px solid var(--line); }
+.section-head {
+  display: flex; justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  flex-wrap: wrap; gap: 24px;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 36px; letter-spacing: -0.015em;
+}
+.section-title em { color: var(--cyan); font-style: italic; font-weight: 400; }
+.section-title em.gold { color: var(--gold); }
+.section-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px; align-items: start;
+}
+.about-text h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500; font-size: 22px;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+.about-text h3:not(:first-child) { margin-top: 36px; }
+.about-text p {
+  color: var(--text-dim);
+  font-size: 14px; line-height: 1.75;
+  margin-bottom: 12px;
+}
+.about-text strong { color: var(--text); font-weight: 500; }
+.about-text .cyan { color: var(--cyan); }
+.about-text .gold { color: var(--gold); }
+
+.about-meta {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 32px;
+}
+.about-meta-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.about-meta-row {
+  display: flex; justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.about-meta-row:last-child { border-bottom: none; }
+.about-meta-row span:first-child {
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.about-meta-row span:last-child {
+  color: var(--text);
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.feature {
+  background: var(--bg);
+  padding: 36px 32px;
+  transition: background 0.2s;
+}
+.feature:hover { background: var(--bg-elev); }
+.feature-icon {
+  width: 44px; height: 44px;
+  border: 1px solid var(--cyan);
+  border-radius: 4px;
+  display: grid; place-items: center;
+  color: var(--cyan);
+  font-size: 22px;
+  margin-bottom: 24px;
+  background: rgba(6,182,212,0.05);
+}
+.feature h4 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500; font-size: 18px;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.feature p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+.filter-bar {
+  display: flex; gap: 4px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  padding: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  width: fit-content;
+}
+.filter-btn {
+  font-family: 'JetBrains Mono', monospace;
+  background: transparent; border: none;
+  color: var(--text-dim);
+  padding: 10px 18px;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.15s;
+}
+.filter-btn:hover { color: var(--text); }
+.filter-btn.active {
+  background: var(--cyan);
+  color: #001520;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.stat-card { background: var(--bg); padding: 28px; transition: background 0.2s; }
+.stat-card:hover { background: var(--bg-elev); }
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.stat-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 500; font-size: 28px;
+  letter-spacing: -0.015em;
+}
+.stat-value.cyan { color: var(--cyan); }
+.stat-value.gold { color: var(--gold); }
+.stat-value.green { color: var(--green); }
+.stat-value.red { color: var(--red); }
+
+.premium-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+.premium-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.premium-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--cyan);
+}
+.premium-card.gold::before { background: var(--gold); }
+.premium-card.green::before { background: var(--green); }
+.premium-card.red::before { background: var(--red); }
+.premium-card-head {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 18px;
+}
+.premium-card-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.premium-card-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 42px; line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.premium-card-value.cyan { color: var(--cyan); }
+.premium-card-value.gold { color: var(--gold); }
+.premium-card-value.green { color: var(--green); }
+.premium-card-detail {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.premium-card-detail strong { color: var(--text); font-weight: 500; }
+
+.chart-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 36px;
+}
+.chart-wrap canvas { max-height: 420px; }
+
+.assets-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 580px;
+  margin: 0 auto;
+}
+.asset-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 32px;
+  transition: all 0.2s;
+}
+.asset-card:hover { border-color: var(--cyan); }
+.asset-head {
+  display: flex; justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.asset-symbol {
+  font-family: 'Fraunces', serif;
+  font-weight: 500; font-size: 24px;
+}
+.asset-name {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.asset-tf {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(6,182,212,0.1);
+  color: var(--cyan);
+  border: 1px solid rgba(6,182,212,0.3);
+  letter-spacing: 0.06em;
+}
+.asset-rows {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.asset-row { display: flex; justify-content: space-between; font-size: 14px; }
+.asset-row-label {
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.asset-row-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 17px;
+}
+.asset-row-value.green { color: var(--green); }
+.asset-row-value.cyan { color: var(--cyan); }
+
+.trades-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  overflow: auto;
+  max-height: 720px;
+}
+.trades-wrap thead { position: sticky; top: 0; z-index: 10; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead {
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+}
+th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 16px 14px;
+  text-align: left; white-space: nowrap;
+}
+th.right { text-align: right; }
+tbody tr {
+  border-bottom: 1px solid var(--line);
+  transition: background 0.15s;
+}
+tbody tr:hover { background: var(--bg-elev); }
+td {
+  padding: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+td.right { text-align: right; }
+td.bold { color: var(--text); font-weight: 500; }
+td .pill {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+.pill.buy   { background: rgba(16,217,138,0.12); color: var(--green); }
+.pill.sell  { background: rgba(239,68,68,0.12); color: var(--red); }
+.pill.tp1   { background: rgba(16,217,138,0.12); color: var(--green); }
+.pill.tp2   { background: rgba(16,217,138,0.15); color: var(--green); }
+.pill.tp1_sl { background: rgba(245,158,11,0.12); color: var(--gold); }
+.pill.sl    { background: rgba(239,68,68,0.12); color: var(--red); }
+.pill.smart { background: rgba(6,182,212,0.12); color: var(--cyan); }
+.stars { color: var(--gold); letter-spacing: 1px; }
+td.profit-pos { color: var(--green); font-weight: 500; }
+td.profit-neg { color: var(--red); font-weight: 500; }
+
+.disclaimer {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  padding: 28px 32px;
+  margin-top: 48px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.disclaimer strong { color: var(--gold); }
+
+footer {
+  padding: 48px 0 32px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+.footer-grid {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; gap: 24px;
+  font-size: 13px; color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .container { padding: 0 20px; }
+  .hero { padding: 64px 0 48px; }
+  .hero-stats { grid-template-columns: 1fr; }
+  .hero-stat:not(:last-child)::after { display: none; }
+  .hero-stat { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .hero-stat:not(:first-child) { padding-left: 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .features-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  .premium-stats { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .section { padding: 64px 0; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="brand">
+      <div class="brand-icon">A</div>
+      <div class="brand-text">Apolo<span>·Pro</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#about">Sistema</a>
+      <a href="#features">Features</a>
+      <a href="#stats">Performance</a>
+      <a href="#equity">Equity</a>
+      <a href="#trades">Trades</a>
+    </div>
+    <div class="live-badge">Verified</div>
+  </div>
+</nav>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Verified Performance · TradingView Strategy Tester</div>
+      <h1>Apolo <span class="gold">Pro</span><br>Track Record</h1>
+      <p class="hero-tagline">
+        Estrategia profesional invite-only de detección de tendencias para TradingView.
+        Solo señales de máxima convicción: <strong>únicamente 4 y 5 estrellas</strong>
+        con <strong>tendencia mayor confirmada</strong>. <strong>Datos 100% verificables</strong>
+        — backtest auditado por el Strategy Tester nativo de TradingView, exportable a CSV
+        para inspección completa.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-label">Net Profit</div>
+          <div class="hero-stat-value positive" id="hero-pct">—</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">Max Drawdown</div>
+          <div class="hero-stat-value negative" id="hero-dd">—</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">Net Pips</div>
+          <div class="hero-stat-value gold" id="hero-pips">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Qué es <em>Apolo Pro</em></h2>
+        <div class="section-meta">Sistema de trading institucional</div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <h3>Estrategia de máxima convicción</h3>
+          <p>
+            <strong>Apolo Pro</strong> es la versión élite del sistema Apolo Trading.
+            A diferencia del scanner estándar, Pro <strong class="cyan">solo opera con
+            señales 4★ y 5★</strong>, exigiendo además que la <strong>tendencia mayor</strong>
+            esté perfectamente alineada con la dirección de la señal.
+          </p>
+          <p>
+            El resultado: <strong>menos operaciones, pero de mucho mayor calidad</strong>.
+            Cada entrada es producto de la convergencia de las mejores confirmaciones
+            técnicas simultáneas más estructura de mercado válida. Sin entradas impulsivas,
+            sin ruido. Solo señales con probabilidad estadística confirmada.
+          </p>
+
+          <h3>Cómo opera la estrategia</h3>
+          <p>
+            El sistema escanea el activo en tiempo real buscando la convergencia de
+            <strong>las mejores confirmaciones técnicas</strong> disponibles, combinadas
+            con análisis de estructura de mercado y momentum direccional. Solo cuando
+            todas las condiciones de máxima calidad se cumplen simultáneamente y la
+            tendencia mayor está alineada, se ejecuta una señal.
+          </p>
+          <p>
+            La gestión de cada operación divide la posición en <strong>33% al TP1</strong>
+            (para asegurar ganancia parcial) y <strong>67% al TP2</strong> (objetivo
+            principal). Si la tendencia cambia tras tocar TP1, se aplica un
+            <strong class="gold">SmartClose</strong> para proteger ganancias.
+          </p>
+
+          <h3>Sin repintado, sin sesgos</h3>
+          <p>
+            Todas las señales se confirman al cierre de vela, eliminando cualquier sesgo
+            de información futura. Los resultados que ves aquí son
+            <strong>reproducibles bit por bit</strong>: cualquier persona con acceso al
+            sistema puede cargarlo en su TradingView y obtener exactamente los mismos
+            números, sin sorpresas posteriores.
+          </p>
+        </div>
+
+        <div class="about-meta">
+          <div class="about-meta-title">Especificaciones</div>
+          <div class="about-meta-row"><span>Activo</span><span>XAGUSD</span></div>
+          <div class="about-meta-row"><span>Bróker</span><span>Vantage</span></div>
+          <div class="about-meta-row"><span>Timeframe</span><span>M5</span></div>
+          <div class="about-meta-row"><span>Capital inicial</span><span>$1,000</span></div>
+          <div class="about-meta-row"><span>Lotaje</span><span>0.1</span></div>
+          <div class="about-meta-row"><span>Comisión</span><span>0.04%</span></div>
+          <div class="about-meta-row"><span>Calidad mín. señal</span><span>★★★★☆</span></div>
+          <div class="about-meta-row"><span>R:R objetivo</span><span>1:1.0 (TP2)</span></div>
+          <div class="about-meta-row"><span>Gestión</span><span>33% TP1 + 67% TP2</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Características <em class="gold">Clave</em></h2>
+        <div class="section-meta">Lo que diferencia a Apolo Pro</div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">⬢</div>
+          <h4>Solo señales 4★/5★</h4>
+          <p>Únicamente se ejecutan operaciones con la máxima convicción técnica
+          disponible. Operaciones de calidad superior, evitando entradas débiles
+          y ruido de mercado.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">▲▼</div>
+          <h4>Tendencia mayor alineada</h4>
+          <p>Solo opera cuando la tendencia mayor confirma la dirección de la señal.
+          Sin operaciones contra tendencia que reduzcan la consistencia del sistema.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">⏱</div>
+          <h4>Sin repintado</h4>
+          <p>Todas las señales se confirman al cierre de la vela. Sin sesgos de
+          información futura. Resultados 100% reproducibles en cualquier chart.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">🛡</div>
+          <h4>SmartClose protector</h4>
+          <p>Cierre inteligente automático tras alcanzar TP1 si la tendencia cambia.
+          Asegura ganancias parciales sin esperar al SL completo.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">📊</div>
+          <h4>Datos auditables</h4>
+          <p>Backtest verificable por el Strategy Tester nativo de TradingView.
+          Exportable a CSV con cada operación detallada.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h4>Gestión 33/67</h4>
+          <p>División automática: 33% cierra en TP1 asegurando ganancia parcial,
+          67% continúa hasta TP2. Reduce drawdown sin sacrificar rendimiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="stats">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Performance por <em>Período</em></h2>
+        <div class="section-meta" id="stats-period">—</div>
+      </div>
+
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-btn active" data-filter="all">Todo</button>
+        <button class="filter-btn" data-filter="2025">2025</button>
+        <button class="filter-btn" data-filter="2026">2026</button>
+        <button class="filter-btn" data-filter="Q2_2025">Trim 2 '25</button>
+        <button class="filter-btn" data-filter="Q3_2025">Trim 3 '25</button>
+        <button class="filter-btn" data-filter="Q4_2025">Trim 4 '25</button>
+        <button class="filter-btn" data-filter="Q1_2026">Trim 1 '26</button>
+        <button class="filter-btn" data-filter="Q2_2026">Trim 2 '26</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Net Profit</div>
+          <div class="stat-value green" id="s-pnl">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Trades</div>
+          <div class="stat-value" id="s-trades">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Win Rate</div>
+          <div class="stat-value cyan" id="s-wr">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Profit Factor</div>
+          <div class="stat-value gold" id="s-pf">—</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 64px;">
+        <h3 style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 24px; margin-bottom: 28px; letter-spacing: -0.01em;">
+          Métricas <em style="color: var(--gold); font-style: italic; font-weight: 400;">institucionales</em>
+        </h3>
+
+        <div class="premium-stats">
+          <div class="premium-card gold">
+            <div class="premium-card-head">
+              <div class="premium-card-title">Sharpe Ratio</div>
+              <div style="color: var(--gold); font-size: 11px; font-family: 'JetBrains Mono', monospace;">EXCELENTE</div>
+            </div>
+            <div class="premium-card-value gold" id="pc-sharpe">—</div>
+            <div class="premium-card-detail">
+              Retorno ajustado al riesgo. <strong>Valor &gt; 2 ya se considera excelente</strong>
+              en finanzas institucionales.
+            </div>
+          </div>
+
+          <div class="premium-card green">
+            <div class="premium-card-head">
+              <div class="premium-card-title">Recovery Factor</div>
+              <div style="color: var(--green); font-size: 11px; font-family: 'JetBrains Mono', monospace;">SUPERIOR</div>
+            </div>
+            <div class="premium-card-value green" id="pc-recovery">—</div>
+            <div class="premium-card-detail">
+              Net Profit ÷ Max Drawdown. Mide la capacidad del sistema de generar ganancias
+              respecto a su mayor caída temporal.
+            </div>
+          </div>
+
+          <div class="premium-card">
+            <div class="premium-card-head">
+              <div class="premium-card-title">Expectancy</div>
+              <div style="color: var(--cyan); font-size: 11px; font-family: 'JetBrains Mono', monospace;">POR OPERACIÓN</div>
+            </div>
+            <div class="premium-card-value cyan" id="pc-expectancy">—</div>
+            <div class="premium-card-detail">
+              Ganancia esperada matemática por trade. Avg Win <strong id="pc-avgwin">—</strong> ·
+              Avg Loss <strong id="pc-avgloss">—</strong>
+            </div>
+          </div>
+
+          <div class="premium-card gold">
+            <div class="premium-card-head">
+              <div class="premium-card-title">Rachas Consecutivas</div>
+              <div style="color: var(--gold); font-size: 11px; font-family: 'JetBrains Mono', monospace;">CONSISTENCIA</div>
+            </div>
+            <div class="premium-card-value gold">
+              <span id="pc-winstreak">—</span>
+              <span style="font-size: 18px; color: var(--text-muted);"> · </span>
+              <span id="pc-lossstreak" style="color: var(--red);">—</span>
+            </div>
+            <div class="premium-card-detail">
+              Máxima racha ganadora vs. perdedora consecutiva. La asimetría indica
+              control de riesgo superior.
+            </div>
+          </div>
+
+          <div class="premium-card green">
+            <div class="premium-card-head">
+              <div class="premium-card-title">Mejor Mes</div>
+              <div style="color: var(--green); font-size: 11px; font-family: 'JetBrains Mono', monospace;" id="pc-bestmonth-label">—</div>
+            </div>
+            <div class="premium-card-value green" id="pc-bestmonth">—</div>
+            <div class="premium-card-detail">
+              <strong id="pc-bestmonth-ops">—</strong> operaciones. Mes más rentable del histórico.
+            </div>
+          </div>
+
+          <div class="premium-card red">
+            <div class="premium-card-head">
+              <div class="premium-card-title">Peor Mes</div>
+              <div style="color: var(--red); font-size: 11px; font-family: 'JetBrains Mono', monospace;" id="pc-worstmonth-label">—</div>
+            </div>
+            <div class="premium-card-value" id="pc-worstmonth">—</div>
+            <div class="premium-card-detail">
+              <strong id="pc-worstmonth-ops">—</strong> operaciones. Aun el peor mes mantuvo breakeven.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="equity">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Equity <em>Curve</em></h2>
+        <div class="section-meta">Capital $1,000 · Lotaje 0.1 · Strategy Tester TradingView</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="equityChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Activo <em>Operado</em></h2>
+        <div class="section-meta">Datos del Strategy Tester de TradingView</div>
+      </div>
+      <div class="assets-grid" id="assets-grid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="trades">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Historial <em>Completo</em></h2>
+        <div class="section-meta" id="trades-count">—</div>
+      </div>
+
+      <div class="trades-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Apertura</th>
+              <th>Cierre</th>
+              <th>Activo</th>
+              <th>TF</th>
+              <th>Tipo</th>
+              <th>★</th>
+              <th class="right">Entry</th>
+              <th class="right">Close</th>
+              <th class="right">Result</th>
+              <th class="right">Pips</th>
+              <th class="right">PnL $</th>
+              <th class="right">Gain %</th>
+            </tr>
+          </thead>
+          <tbody id="trades-body"></tbody>
+        </table>
+      </div>
+
+      <div class="disclaimer">
+        <strong>📊 Verificable:</strong>
+        Los resultados aquí presentados son <strong>extraídos directamente del Strategy Tester
+        de TradingView</strong> usando la estrategia oficial Apolo Pro en XAGUSD M5 (Vantage).
+        Cualquier usuario con acceso a TradingView puede reproducir estos mismos datos cargando
+        el código y verificar las 210 operaciones una por una.
+        <br><br>
+        <strong>⚠ Disclaimer:</strong> El rendimiento pasado <strong>NO garantiza resultados futuros</strong>.
+        Los datos provienen de backtest con datos históricos de Vantage; las operaciones reales
+        en bróker pueden variar por spread, slippage, comisiones y condiciones de ejecución.
+        Esta página no constituye asesoría financiera. Trading conlleva riesgo de pérdida.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>© 2026 Apolo Trading System · Backtest auditado en TradingView</div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+      Sin repintado · Resultados verificables · Backtest auditado
+    </div>
+  </div>
+</footer>
+
+<script src="apolo-data.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+
+$('hero-pct').textContent  = APOLO_DATA.hero.netProfitPct;
+$('hero-dd').textContent   = APOLO_DATA.hero.maxDrawdown;
+$('hero-pips').textContent = APOLO_DATA.hero.netProfitPips;
+
+$('stats-period').textContent = `${APOLO_DATA.stats.startDate} · ${APOLO_DATA.stats.period}`;
+$('trades-count').textContent = `Historial completo · ${APOLO_DATA.trades.length} operaciones`;
+
+const adv = APOLO_DATA.advancedStats;
+$('pc-sharpe').textContent      = adv.sharpeRatio;
+$('pc-recovery').textContent    = adv.recoveryFactor;
+$('pc-expectancy').textContent  = adv.expectancy;
+$('pc-avgwin').textContent      = adv.avgWin;
+$('pc-avgloss').textContent     = adv.avgLoss;
+$('pc-winstreak').textContent   = adv.maxWinStreak + 'W';
+$('pc-lossstreak').textContent  = adv.maxLossStreak + 'L';
+$('pc-bestmonth').textContent       = adv.bestMonth.pnl;
+$('pc-bestmonth-label').textContent = adv.bestMonth.period.toUpperCase();
+$('pc-bestmonth-ops').textContent   = adv.bestMonth.ops;
+$('pc-worstmonth').textContent       = adv.worstMonth.pnl;
+$('pc-worstmonth-label').textContent = adv.worstMonth.period.toUpperCase();
+$('pc-worstmonth-ops').textContent   = adv.worstMonth.ops;
+$('pc-worstmonth').style.color = adv.worstMonth.pnl.startsWith('+') ? 'var(--green)' : 'var(--red)';
+
+function applyFilter(filter) {
+  let pnl, ops, wr, pf;
+  if (filter === 'all') {
+    pnl = '+$661.44';
+    ops = APOLO_DATA.stats.totalTrades;
+    wr  = APOLO_DATA.stats.winRate;
+    pf  = APOLO_DATA.stats.profitFactor;
+  } else {
+    const p = APOLO_DATA.periodStats[filter];
+    if (!p) return;
+    pnl = p.pnl;
+    ops = p.ops;
+    wr  = p.wr;
+    pf  = APOLO_DATA.stats.profitFactor;
+  }
+  $('s-pnl').textContent    = pnl;
+  $('s-trades').textContent = ops;
+  $('s-wr').textContent     = wr;
+  $('s-pf').textContent     = pf;
+  $('s-pnl').style.color = pnl.startsWith('+') ? 'var(--green)' : 'var(--red)';
+}
+applyFilter('all');
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilter(btn.dataset.filter);
+  });
+});
+
+const assetsGrid = $('assets-grid');
+APOLO_DATA.assets.forEach(a => {
+  assetsGrid.insertAdjacentHTML('beforeend', `
+    <div class="asset-card">
+      <div class="asset-head">
+        <div>
+          <div class="asset-symbol">${a.symbol}</div>
+          <div class="asset-name">${a.name}</div>
+        </div>
+        <div class="asset-tf">${a.timeframe}</div>
+      </div>
+      <div class="asset-rows">
+        <div class="asset-row"><span class="asset-row-label">Trades</span><span class="asset-row-value">${a.trades}</span></div>
+        <div class="asset-row"><span class="asset-row-label">Win Rate</span><span class="asset-row-value cyan">${a.winRate}</span></div>
+        <div class="asset-row"><span class="asset-row-label">Profit Factor</span><span class="asset-row-value green">${a.profitFactor}</span></div>
+        <div class="asset-row"><span class="asset-row-label">Net Pips</span><span class="asset-row-value green">${a.netPips}</span></div>
+      </div>
+    </div>
+  `);
+});
+
+const tbody = $('trades-body');
+APOLO_DATA.trades.forEach(t => {
+  const stars = '★'.repeat(t.stars) + '☆'.repeat(5 - t.stars);
+  const profitClass = t.pips >= 0 ? 'profit-pos' : 'profit-neg';
+  const pnlClass = t.pnlUsd >= 0 ? 'profit-pos' : 'profit-neg';
+  const sign = t.gainPct >= 0 ? '+' : '';
+  const pipsSign = t.pips >= 0 ? '+' : '';
+  const pnlSign = t.pnlUsd >= 0 ? '+' : '-';
+  const actionClass = t.action.toLowerCase();
+  const resultClass = t.result.toLowerCase().replace('+', '_');
+
+  tbody.insertAdjacentHTML('beforeend', `
+    <tr>
+      <td>${t.openDate}</td>
+      <td>${t.closeDate}</td>
+      <td class="bold">${t.symbol}</td>
+      <td>${t.timeframe}</td>
+      <td><span class="pill ${actionClass}">${t.action}</span></td>
+      <td><span class="stars">${stars}</span></td>
+      <td class="right bold">${t.priceOpen}</td>
+      <td class="right">${t.priceClose}</td>
+      <td class="right"><span class="pill ${resultClass}">${t.result}</span></td>
+      <td class="right ${profitClass}">${pipsSign}${t.pips}</td>
+      <td class="right ${pnlClass}">${pnlSign}$${Math.abs(t.pnlUsd).toFixed(2)}</td>
+      <td class="right ${profitClass}">${sign}${t.gainPct}%</td>
+    </tr>
+  `);
+});
+
+const ctx = $('equityChart').getContext('2d');
+const labels = APOLO_DATA.equityCurve.map(p => p.date);
+const dataPoints = APOLO_DATA.equityCurve.map(p => p.balance);
+const gradient = ctx.createLinearGradient(0, 0, 0, 420);
+gradient.addColorStop(0, 'rgba(6,182,212,0.35)');
+gradient.addColorStop(0.5, 'rgba(6,182,212,0.10)');
+gradient.addColorStop(1, 'rgba(6,182,212,0.00)');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'Balance',
+      data: dataPoints,
+      borderColor: '#22d3ee',
+      backgroundColor: gradient,
+      borderWidth: 2,
+      pointRadius: 0,
+      pointHoverRadius: 6,
+      pointHoverBackgroundColor: '#22d3ee',
+      pointHoverBorderColor: '#0a0a0d',
+      pointHoverBorderWidth: 2,
+      fill: true,
+      tension: 0.35
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { intersect: false, mode: 'index' },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#16161a',
+        borderColor: '#25252c',
+        borderWidth: 1,
+        titleColor: '#8a8a96',
+        titleFont: { family: 'JetBrains Mono', size: 11, weight: '500' },
+        bodyColor: '#22d3ee',
+        bodyFont: { family: 'Fraunces', size: 18, weight: '500' },
+        padding: 14,
+        cornerRadius: 0,
+        displayColors: false,
+        callbacks: {
+          label: c => `$${c.parsed.y.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.03)', drawTicks: false },
+        ticks: { color: '#5a5a64', font: { family: 'JetBrains Mono', size: 10 }, maxTicksLimit: 8, padding: 12 },
+        border: { display: false }
+      },
+      y: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: { color: '#5a5a64', font: { family: 'JetBrains Mono', size: 10 }, padding: 12, callback: v => '$' + v.toLocaleString('en-US') },
+        border: { display: false }
+      }
+    }
+  }
+});
+
+document.querySelectorAll('.stat-card, .asset-card, .premium-card, .feature').forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(12px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  setTimeout(() => {
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  }, 100 + i * 30);
+});
+</script>
+
+</body>
+</html>
