@@ -155,7 +155,7 @@ footer{padding:44px 0;text-align:center;color:var(--muted);font-size:13px}
 <div class="section-sub">Cómo le fue a cada activo cada mes del último año</div>
 <div class="toggle" id="monthToggle"><button class="active" data-m="combinado">Combinado</button><button data-m="oro">Solo Oro</button><button data-m="plata">Solo Plata</button></div>
 <div class="month-table"><table>
-<thead><tr><th>Mes</th><th>Operaciones</th><th>Win Rate</th><th>Profit Factor</th><th>Resultado</th></tr></thead>
+<thead><tr><th>Mes</th><th>Operaciones</th><th>Win Rate</th><th>Profit Factor</th><th>Resultado</th><th>Rendimiento</th></tr></thead>
 <tbody id="monthBody"></tbody>
 </table></div>
 </div></section>
@@ -166,6 +166,7 @@ footer{padding:44px 0;text-align:center;color:var(--muted);font-size:13px}
 <div class="asset-cards">
 <div class="asset-card oro"><h3>🥇 Oro · XAUUSD · M5 <span style="font-size:13px;color:var(--muted)">OANDA</span></h3>
 <div class="arow"><span class="k">Net Profit</span><span class="v" style="color:var(--green)">+$3,686</span></div>
+<div class="arow"><span class="k">Rendimiento</span><span class="v" style="color:var(--green)">+368.6%</span></div>
 <div class="arow"><span class="k">Operaciones</span><span class="v">667</span></div>
 <div class="arow"><span class="k">Win Rate</span><span class="v">59.8%</span></div>
 <div class="arow"><span class="k">Profit Factor</span><span class="v" style="color:var(--gold)">1.88</span></div>
@@ -173,6 +174,7 @@ footer{padding:44px 0;text-align:center;color:var(--muted);font-size:13px}
 <div class="arow"><span class="k">Expectancy/trade</span><span class="v" style="color:var(--green)">+$5.53</span></div></div>
 <div class="asset-card plata"><h3>🥈 Plata · XAGUSD · M1 <span style="font-size:13px;color:var(--muted)">Vantage</span></h3>
 <div class="arow"><span class="k">Net Profit</span><span class="v" style="color:var(--green)">+$4,028</span></div>
+<div class="arow"><span class="k">Rendimiento</span><span class="v" style="color:var(--green)">+402.8%</span></div>
 <div class="arow"><span class="k">Operaciones</span><span class="v">2,226</span></div>
 <div class="arow"><span class="k">Win Rate</span><span class="v">61.7%</span></div>
 <div class="arow"><span class="k">Profit Factor</span><span class="v" style="color:var(--gold)">1.57</span></div>
@@ -225,7 +227,8 @@ function renderMonth(t){const arr=MESES[t];const maxAbs=Math.max(...arr.map(m=>M
 document.getElementById('monthBody').innerHTML=arr.slice().reverse().map(m=>{
 const col=m.net>=0?'var(--green)':'var(--red)';const w=Math.abs(m.net)/maxAbs*100;
 const pfcol=m.pf>=1.5?'var(--green)':m.pf>=1?'var(--gold)':'var(--red)';
-return `<tr><td style="font-weight:600">${mesLabel(m.mes)}</td><td>${m.n}</td><td>${m.wr}%</td><td style="color:${pfcol};font-weight:600">${m.pf}</td><td><div class="bar-cell"><span style="color:${col};font-weight:700;min-width:70px">${m.net>=0?'+':''}$${m.net.toLocaleString()}</span><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${col}"></div></div></div></td></tr>`;}).join('');}
+const rend=(m.net/1000*100).toFixed(1);
+return `<tr><td style="font-weight:600">${mesLabel(m.mes)}</td><td>${m.n}</td><td>${m.wr}%</td><td style="color:${pfcol};font-weight:600">${m.pf}</td><td><div class="bar-cell"><span style="color:${col};font-weight:700;min-width:70px">${m.net>=0?'+':''}$${m.net.toLocaleString()}</span><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${col}"></div></div></div></td><td style="color:${col};font-weight:600">${m.net>=0?'+':''}${rend}%</td></tr>`;}).join('');}
 document.querySelectorAll('#monthToggle button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#monthToggle button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderMonth(b.dataset.m);});
 renderMonth('combinado');
 
